@@ -1,0 +1,10 @@
+[package]
+name = "cortex-m-spa"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+m4 = []
+
+[dependencies]
+proto-hal = { git = "https://github.com/adinack/proto-hal" }
