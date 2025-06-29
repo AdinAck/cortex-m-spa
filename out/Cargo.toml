@@ -7,4 +7,4 @@ edition = "2021"
 m4 = []
 
 [dependencies]
-proto-hal = { git = "https://github.com/adinack/proto-hal" }
+proto-hal = { git = "https://github.com/adinack/proto-hal", branch = "main" }
