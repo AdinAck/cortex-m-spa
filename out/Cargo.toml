@@ -8,3 +8,7 @@ m4 = []
 
 [dependencies]
 proto-hal = { git = "https://github.com/adinack/proto-hal", branch = "main" }
+
+[build-dependencies]
+model = { path = "../model" }
+proto-hal-build = { git = "https://github.com/adinack/proto-hal", branch = "main" }
