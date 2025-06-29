@@ -8,7 +8,7 @@ use proto_hal_build::ir::{
 
 pub fn generate(x: u8) -> Field {
     Field::new(
-        format!("setpend{x}"),
+        format!("active{x}"),
         x % 32,
         1,
         Access::read(Numericity::enumerated([
