@@ -13,7 +13,7 @@ pub fn generate(x: u8) -> Field {
         1,
         Access::read_write_asymmetrical(
             Numericity::enumerated([Variant::new("Idle", 0), Variant::new("Pending", 1)]),
-            Numericity::enumerated([Variant::new("Retain", 0), Variant::new("Pend", 1)]),
+            Numericity::enumerated([Variant::new("Noop", 0).inert(), Variant::new("Pend", 1)]),
         ),
     )
 }
