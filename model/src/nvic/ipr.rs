@@ -25,6 +25,7 @@ pub fn generate(instance: Instance) -> Register {
         instance.offset(),
         (0..4).map(|x| ip::generate((instance.0 as u8) * 4 + x)),
     )
+    .reset(0)
 }
 
 pub fn generate_group() -> impl Iterator<Item = Register> {
