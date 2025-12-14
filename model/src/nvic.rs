@@ -12,8 +12,11 @@ pub mod ispr;
 /*
 references:
 - RM0440
+- RM0490
 - PM0214
+- PM0223
 - https://developer.arm.com/documentation/100166/0001/Nested-Vectored-Interrupt-Controller/NVIC-programmers-model/Table-of-NVIC-registers?lang=en
+- https://developer.arm.com/documentation/ddi0419/c/System-Level-Architecture/System-Address-Map/Nested-Vectored-Interrupt-Controller--NVIC/NVIC-register-support-in-the-SCS?lang=en#BEHEBDBE
 */
 
 #[derive(Debug)]
