@@ -1,19 +1,11 @@
-use proto_hal_build::ir::{
-    access::Access,
-    structures::{
-        field::{Field, Numericity},
-        variant::Variant,
-    },
-};
+use proto_hal_model::{Field, Variant, model::RegisterEntry};
 
-pub fn generate(x: u8) -> Field {
-    Field::new(
-        format!("clrena{x}"),
-        x % 32,
-        1,
-        Access::read_write_asymmetrical(
-            Numericity::enumerated([Variant::new("Disabled", 0), Variant::new("Enabled", 1)]),
-            Numericity::enumerated([Variant::new("Noop", 0).inert(), Variant::new("Disable", 1)]),
-        ),
-    )
+pub fn clrena<'cx>(icer: &mut RegisterEntry<'cx>, x: u8) {
+    let mut clrena = icer.add_read_write_field(Field::new(format!("clrena{x}"), x % 32, 1));
+
+    clrena.add_read_variant(Variant::new("Disabled", 0));
+    clrena.add_read_variant(Variant::new("Enabled", 1));
+
+    clrena.add_write_variant(Variant::new("Noop", 0).inert());
+    clrena.add_write_variant(Variant::new("Disable", 1));
 }

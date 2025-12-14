@@ -1,15 +1,34 @@
-use proto_hal_build::ir::{structures::hal::Hal, utils::diagnostic::Diagnostics};
+use proto_hal_model::Model;
 
-#[cfg(feature = "m4")] // temporary // why is this temporary?
 pub mod nvic;
 
-pub fn generate() -> (Hal, Diagnostics) {
-    let hal = Hal::new([
-        #[cfg(feature = "m4")]
-        nvic::generate(),
-    ]);
+use nvic::nvic;
 
-    let diagnostics = hal.validate();
+#[derive(Debug, Default)]
+pub struct Configuration {
+    nvic: Option<nvic::Configuration>,
+}
 
-    (hal, diagnostics)
+impl Configuration {
+    pub fn m0() -> Self {
+        Self {
+            nvic: Some(nvic::Configuration::M0),
+        }
+    }
+
+    pub fn m4() -> Self {
+        Self {
+            nvic: Some(nvic::Configuration::M4),
+        }
+    }
+}
+
+pub fn model(config: Configuration) -> Model {
+    let mut model = Model::new();
+
+    if let Some(nvic_config) = config.nvic {
+        nvic(&mut model, nvic_config);
+    }
+
+    model
 }

@@ -1,19 +1,8 @@
-use proto_hal_build::ir::{
-    access::Access,
-    structures::{
-        field::{Field, Numericity},
-        variant::Variant,
-    },
-};
+use proto_hal_model::{Field, Variant, model::RegisterEntry};
 
-pub fn generate(x: u8) -> Field {
-    Field::new(
-        format!("active{x}"),
-        x % 32,
-        1,
-        Access::read(Numericity::enumerated([
-            Variant::new("Inactive", 0),
-            Variant::new("Active", 1),
-        ])),
-    )
+pub fn active<'cx>(iabr: &mut RegisterEntry<'cx>, x: u8) {
+    let mut active = iabr.add_read_field(Field::new(format!("active{x}"), x % 32, 1));
+
+    active.add_variant(Variant::new("Inactive", 0));
+    active.add_variant(Variant::new("Active", 1));
 }

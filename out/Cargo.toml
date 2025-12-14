@@ -3,12 +3,14 @@ name = "cortex-m-spa"
 version = "0.1.0"
 edition = "2021"
 
-[features]
-m4 = ["model/m4"]
-
 [dependencies]
-proto-hal = { git = "https://github.com/adinack/proto-hal", branch = "main" }
+proto-hal = { git = "https://github.com/adinack/proto-hal" }
+macros = { package = "cortex-m-spa-macros", path = "../macros" }
 
 [build-dependencies]
-model = { path = "../model" }
-proto-hal-build = { git = "https://github.com/adinack/proto-hal", branch = "main" }
+proto-hal-build = { git = "https://github.com/adinack/proto-hal" }
+model = { package = "cortex-m-spa-model", path = "../model" }
+
+[features]
+m0 = []
+m4 = []

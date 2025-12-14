@@ -1,10 +1,8 @@
 [package]
-name = "model"
+name = "cortex-m-spa-model"
 version = "0.1.0"
 edition = "2024"
 
-[features]
-m4 = []
-
 [dependencies]
-proto-hal-build = { git = "https://github.com/adinack/proto-hal", branch = "main" }
+derive_more = { version = "2.1.0", features = ["deref"] }
+proto-hal-model = { git = "https://github.com/adinack/proto-hal" }

@@ -1,6 +1,8 @@
-pub mod active;
+use proto_hal_model::{Register, model::PeripheralEntry};
 
-use proto_hal_build::ir::structures::register::Register;
+use crate::nvic::iabr::active::active;
+
+pub mod active;
 
 #[repr(u8)]
 #[derive(Clone, Copy)]
@@ -33,16 +35,30 @@ impl Instance {
     fn offset(&self) -> u32 {
         0x300 + 4 * *self as u32
     }
+
+    pub fn iter() -> impl Iterator<Item = Self> {
+        [
+            Self::I1,
+            Self::I2,
+            Self::I3,
+            Self::I3,
+            Self::I4,
+            Self::I5,
+            Self::I6,
+            Self::I7,
+            Self::I8,
+        ]
+        .into_iter()
+    }
 }
 
-pub fn generate(instance: Instance) -> Register {
-    Register::new(
-        instance.ident(),
-        instance.offset(),
-        match instance {
-            Instance::I8 => 0..16,
-            _ => 0..32,
-        }
-        .map(|x| active::generate((instance as u8) * 32 + x)),
-    )
+pub fn iabr<'cx>(nvic: &mut PeripheralEntry<'cx>, instance: Instance) {
+    let mut iabr = nvic.add_register(Register::new(instance.ident(), instance.offset()));
+
+    for x in match instance {
+        Instance::I8 => 0..16,
+        _ => 0..32,
+    } {
+        active(&mut iabr, instance as u8 * 32 + x);
+    }
 }
