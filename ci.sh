@@ -3,6 +3,7 @@
 set -euxo pipefail
 
 cd model
+cargo r
 cargo clippy -- --deny warnings
 
 cd ../out
