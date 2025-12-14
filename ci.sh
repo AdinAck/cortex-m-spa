@@ -7,7 +7,7 @@ cargo clippy -- --deny warnings
 
 cd ../out
 
-VARIANTS=("m4")
+VARIANTS=("m0" "m4")
 # TESTS=()
 
 for VARIANT in "${VARIANTS[@]}"; do
