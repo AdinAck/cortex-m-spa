@@ -12,5 +12,5 @@ proto-hal-build = { git = "https://github.com/adinack/proto-hal" }
 model = { package = "cortex-m-spa-model", path = "../model" }
 
 [features]
-m0 = []
-m4 = []
+m0 = ["macros/m0"]
+m4 = ["macros/m4"]
