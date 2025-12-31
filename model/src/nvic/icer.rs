@@ -51,7 +51,7 @@ impl Instance {
 }
 
 pub fn icer<'cx>(nvic: &mut PeripheralEntry<'cx>, instance: Instance) {
-    let mut icer = nvic.add_register(Register::new(instance.ident(), instance.offset()).partial());
+    let mut icer = nvic.add_register(Register::new(instance.ident(), instance.offset()).leaky());
 
     for x in match instance {
         Instance::I8 => 0..16,

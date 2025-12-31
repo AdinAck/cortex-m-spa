@@ -53,7 +53,7 @@ impl Instance {
 }
 
 pub fn icpr<'cx>(nvic: &mut PeripheralEntry<'cx>, instance: Instance) {
-    let mut icpr = nvic.add_register(Register::new(instance.ident(), instance.offset()).partial());
+    let mut icpr = nvic.add_register(Register::new(instance.ident(), instance.offset()).leaky());
 
     for x in match instance {
         Instance::I8 => 0..16,
