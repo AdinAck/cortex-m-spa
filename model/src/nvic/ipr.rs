@@ -30,7 +30,7 @@ pub fn ipr<'cx>(nvic: &mut PeripheralEntry<'cx>, instance: Instance) {
     let mut ipr = nvic.add_register(
         Register::new(instance.ident(), instance.offset())
             .reset(0)
-            .partial(),
+            .leaky(),
     );
 
     for x in 0..4 {
