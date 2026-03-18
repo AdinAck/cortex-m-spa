@@ -1,4 +1,4 @@
-use proto_hal_model::{Model, Peripheral};
+use phm::{Model, Peripheral};
 
 use crate::nvic::{iabr::iabr, icer::icer, icpr::icpr, ipr::ipr, iser::iser, ispr::ispr};
 

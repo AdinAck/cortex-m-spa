@@ -1,4 +1,4 @@
-use proto_hal_model::{Field, Variant, model::RegisterEntry};
+use phm::{Field, Variant, model::RegisterEntry};
 
 pub fn clrpend<'cx>(icpr: &mut RegisterEntry<'cx>, x: u8) {
     let mut clrpend = icpr.add_read_write_field(Field::new(format!("clrpend{x}"), x % 32, 1));
