@@ -9,7 +9,7 @@ fn main() -> Result<(), String> {
         Configuration::default()
     };
 
-    proto_hal_build::render(&model(variant));
+    phb::render(&model(variant).map_err(|e| format!("{e:?}"))?);
 
     println!("cargo::rerun-if-changed=../model");
 

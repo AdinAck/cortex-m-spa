@@ -1,4 +1,4 @@
-use proto_hal_model::Model;
+use phm::Model;
 
 pub mod nvic;
 
@@ -23,12 +23,12 @@ impl Configuration {
     }
 }
 
-pub fn model(config: Configuration) -> Model {
+pub fn model(config: Configuration) -> phm::Result<Model> {
     let mut model = Model::new();
 
     if let Some(nvic_config) = config.nvic {
         nvic(&mut model, nvic_config);
     }
 
-    model
+    Ok(model)
 }
