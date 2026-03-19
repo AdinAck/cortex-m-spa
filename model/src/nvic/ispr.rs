@@ -40,7 +40,6 @@ impl Instance {
             Self::I1,
             Self::I2,
             Self::I3,
-            Self::I3,
             Self::I4,
             Self::I5,
             Self::I6,
