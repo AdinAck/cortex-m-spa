@@ -1,4 +1,4 @@
-use model::{model, Configuration};
+use model::{compose, Configuration};
 
 fn main() {
     let variant = if cfg!(feature = "m0") {
@@ -9,7 +9,7 @@ fn main() {
         Configuration::default()
     };
 
-    phb::render(&model(variant));
+    phb::render(&compose(variant));
 
     println!("cargo::rerun-if-changed=../model");
 }
