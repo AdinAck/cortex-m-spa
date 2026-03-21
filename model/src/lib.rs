@@ -1,4 +1,4 @@
-use phm::ModelBuilder;
+use phm::Composition;
 
 pub mod nvic;
 
@@ -23,8 +23,8 @@ impl Configuration {
     }
 }
 
-pub fn model(config: Configuration) -> ModelBuilder {
-    let mut model = ModelBuilder::new();
+pub fn compose(config: Configuration) -> Composition {
+    let mut model = Composition::new();
 
     if let Some(nvic_config) = config.nvic {
         nvic(&mut model, nvic_config);

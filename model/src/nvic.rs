@@ -1,4 +1,4 @@
-use phm::{ModelBuilder, Peripheral};
+use phm::{Composition, Peripheral};
 
 use crate::nvic::{iabr::iabr, icer::icer, icpr::icpr, ipr::ipr, iser::iser, ispr::ispr};
 
@@ -25,8 +25,8 @@ pub enum Configuration {
     M4,
 }
 
-pub fn nvic(model: &mut ModelBuilder, config: Configuration) {
-    let mut nvic = model.add_peripheral(Peripheral::new("nvic", 0xe000_e000));
+pub fn nvic(composition: &mut Composition, config: Configuration) {
+    let mut nvic = composition.add_peripheral(Peripheral::new("nvic", 0xe000_e000));
 
     match config {
         Configuration::M0 => {
