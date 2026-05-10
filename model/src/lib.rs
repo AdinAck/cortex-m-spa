@@ -1,34 +1,30 @@
-use phm::Composition;
+use enum_iterator::Sequence;
+use phm::{Composition, diagnostic};
 
 pub mod nvic;
 
 use nvic::nvic;
 
-#[derive(Debug, Default)]
-pub struct Configuration {
-    nvic: Option<nvic::Configuration>,
+#[derive(Debug, Clone, Copy, Sequence)]
+pub enum Device {
+    M0,
+    M4,
 }
 
-impl Configuration {
-    pub fn m0() -> Self {
-        Self {
-            nvic: Some(nvic::Configuration::M0),
-        }
-    }
-
-    pub fn m4() -> Self {
-        Self {
-            nvic: Some(nvic::Configuration::M4),
-        }
+impl Device {
+    pub fn apply_to(&self, composition: &mut Composition) {
+        nvic(composition, *self);
     }
 }
 
-pub fn compose(config: Configuration) -> Composition {
-    let mut model = Composition::new();
+pub fn compose(device: Option<Device>) -> Composition {
+    let mut composition = Composition::new();
 
-    if let Some(nvic_config) = config.nvic {
-        nvic(&mut model, nvic_config);
+    if let Some(device) = device {
+        device.apply_to(&mut composition);
+    } else {
+        composition.add_diagnostic(diagnostic::Rank::Error, "A device must be specified.");
     }
 
-    model
+    composition
 }

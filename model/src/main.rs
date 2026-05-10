@@ -1,8 +1,9 @@
-use cortex_m_spa_model::{Configuration, compose};
+use cortex_m_spa_model::compose;
+use enum_iterator::all;
 
 fn main() {
-    for variant in [Configuration::m0(), Configuration::m4()] {
-        println!("=== Variant: {variant:?} ===");
-        phm::validate(compose(variant));
+    for device in all() {
+        println!("=== Variant: {device:?} ===");
+        phm::validate(compose(Some(device)));
     }
 }
