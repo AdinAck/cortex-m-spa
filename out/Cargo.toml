@@ -15,3 +15,10 @@ model = { package = "cortex-m-spa-model", path = "../model" }
 [features]
 m0 = ["macros/m0"]
 m4 = ["macros/m4"]
+
+# inject local crates for tests
+[patch."https://github.com/adinack/proto-hal"]
+proto-hal = { path = "/Users/adinackerman/Documents/GitHub/proto-hal/proto-hal" }
+proto-hal-build = { path = "/Users/adinackerman/Documents/GitHub/proto-hal/build" }
+proto-hal-model = { path = "/Users/adinackerman/Documents/GitHub/proto-hal/model" }
+proto-hal-macros = { path = "/Users/adinackerman/Documents/GitHub/proto-hal/macros" }

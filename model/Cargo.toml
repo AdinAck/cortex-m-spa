@@ -8,3 +8,7 @@ rust-version = "1.95"
 derive_more = { version = "2.1.0", features = ["deref"] }
 enum-iterator = "2.3.0"
 phm = { package = "proto-hal-model", git = "https://github.com/adinack/proto-hal" }
+
+# inject local crates for tests
+[patch."https://github.com/adinack/proto-hal"]
+proto-hal-model = { path = "/Users/adinackerman/Documents/GitHub/proto-hal/model" }
