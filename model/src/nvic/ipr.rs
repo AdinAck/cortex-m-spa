@@ -1,7 +1,7 @@
 use derive_more::Deref;
 use phm::{Register, model::PeripheralEntry};
 
-use crate::nvic::{self, ipr::ip::ip};
+use crate::{Device, nvic::ipr::ip::ip};
 
 pub mod ip;
 
@@ -17,10 +17,10 @@ impl Instance {
         0x400 + 4 * self.0 as u32
     }
 
-    pub fn iter(config: nvic::Configuration) -> impl Iterator<Item = Self> {
-        match config {
-            nvic::Configuration::M0 => 0..8,
-            nvic::Configuration::M4 => 0..60,
+    pub fn iter(device: Device) -> impl Iterator<Item = Self> {
+        match device {
+            Device::M0 => 0..8,
+            Device::M4 => 0..60,
         }
         .map(Self)
     }

@@ -1,15 +1,14 @@
-use model::{compose, Configuration};
+#[allow(unused)]
+use model::{compose, Device};
 
 fn main() {
-    let variant = if cfg!(feature = "m0") {
-        Configuration::m0()
-    } else if cfg!(feature = "m4") {
-        Configuration::m4()
-    } else {
-        Configuration::default()
+    let device = cfg_select! {
+        feature = "m0" => Some(Device::M0),
+        feature = "m4" => Some(Device::M4),
+        _ => None,
     };
 
-    phb::render(&compose(variant));
+    phb::render(&compose(device));
 
     println!("cargo::rerun-if-changed=../model");
 }

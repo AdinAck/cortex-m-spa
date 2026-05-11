@@ -1,6 +1,9 @@
 use phm::{Composition, Peripheral};
 
-use crate::nvic::{iabr::iabr, icer::icer, icpr::icpr, ipr::ipr, iser::iser, ispr::ispr};
+use crate::{
+    Device,
+    nvic::{iabr::iabr, icer::icer, icpr::icpr, ipr::ipr, iser::iser, ispr::ispr},
+};
 
 pub mod iabr;
 pub mod icer;
@@ -19,24 +22,18 @@ references:
 - https://developer.arm.com/documentation/ddi0419/c/System-Level-Architecture/System-Address-Map/Nested-Vectored-Interrupt-Controller--NVIC/NVIC-register-support-in-the-SCS?lang=en#BEHEBDBE
 */
 
-#[derive(Debug)]
-pub enum Configuration {
-    M0,
-    M4,
-}
-
-pub fn nvic(composition: &mut Composition, config: Configuration) {
+pub fn nvic(composition: &mut Composition, device: Device) {
     let mut nvic = composition.add_peripheral(Peripheral::new("nvic", 0xe000_e000));
 
-    match config {
-        Configuration::M0 => {
+    match device {
+        Device::M0 => {
             iser(&mut nvic, iser::Instance::I1);
             icer(&mut nvic, icer::Instance::I1);
             ispr(&mut nvic, ispr::Instance::I1);
             icpr(&mut nvic, icpr::Instance::I1);
             iabr(&mut nvic, iabr::Instance::I1);
         }
-        Configuration::M4 => {
+        Device::M4 => {
             // enable
             for instance in iser::Instance::iter() {
                 iser(&mut nvic, instance);
@@ -65,7 +62,7 @@ pub fn nvic(composition: &mut Composition, config: Configuration) {
     }
 
     // priority
-    for instance in ipr::Instance::iter(config) {
+    for instance in ipr::Instance::iter(device) {
         ipr(&mut nvic, instance);
     }
 }
