@@ -1,6 +1,6 @@
 pub mod setpend;
 
-use phm::{Register, model::PeripheralEntry};
+use phm::{Register, model::PeripheralEntry, prelude::*};
 use setpend::setpend;
 
 #[repr(u8)]

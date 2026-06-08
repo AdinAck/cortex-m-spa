@@ -1,7 +1,7 @@
 pub mod clrena;
 
 use clrena::clrena;
-use phm::{Register, model::PeripheralEntry};
+use phm::{Register, model::PeripheralEntry, prelude::*};
 
 #[repr(u8)]
 #[derive(Clone, Copy)]

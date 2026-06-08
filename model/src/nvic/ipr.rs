@@ -1,5 +1,5 @@
 use derive_more::Deref;
-use phm::{Register, model::PeripheralEntry};
+use phm::{Register, model::PeripheralEntry, prelude::*};
 
 use crate::{Device, nvic::ipr::ip::ip};
 

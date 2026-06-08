@@ -1,6 +1,6 @@
 pub mod setena;
 
-use phm::{Register, model::PeripheralEntry};
+use phm::{Register, model::PeripheralEntry, prelude::*};
 use setena::setena;
 
 #[repr(u8)]

@@ -1,4 +1,4 @@
-use phm::{Composition, Peripheral};
+use phm::{Composition, Peripheral, prelude::*};
 
 use crate::{
     Device,
