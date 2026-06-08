@@ -1,4 +1,4 @@
-use phm::{Field, Variant, model::RegisterEntry};
+use phm::{Field, Variant, model::RegisterEntry, prelude::*};
 
 pub fn setena<'cx>(iser: &mut RegisterEntry<'cx>, x: u8) {
     let mut setena = iser.add_read_write_field(Field::new(format!("setena{x}"), x % 32, 1));

@@ -1,4 +1,4 @@
-use phm::{Field, Variant, model::RegisterEntry};
+use phm::{Field, Variant, model::RegisterEntry, prelude::*};
 
 pub fn active<'cx>(iabr: &mut RegisterEntry<'cx>, x: u8) {
     let mut active = iabr.add_read_field(Field::new(format!("active{x}"), x % 32, 1));
