@@ -1,0 +1,6 @@
+import cortex_m.nvic
+
+/// ARM Cortex-M0 core peripherals.
+device m0 {
+    peripheral #nvic.nvic_m0 as nvic
+}

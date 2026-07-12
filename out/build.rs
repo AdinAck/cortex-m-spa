@@ -1,14 +1,9 @@
-#[allow(unused)]
-use model::{compose, Device};
-
 fn main() {
-    let device = cfg_select! {
-        feature = "m0" => Some(Device::M0),
-        feature = "m4" => Some(Device::M4),
-        _ => None,
+    let path = cfg_select! {
+        feature = "m0" => "../model/src/m0.phm",
+        feature = "m4" => "../model/src/m4.phm",
+        _ => panic!("a device must be specified: enable feature `m0` or `m4`"),
     };
 
-    phb::render(&compose(device));
-
-    println!("cargo::rerun-if-changed=../model");
+    phb::model::render(path);
 }

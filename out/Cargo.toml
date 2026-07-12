@@ -9,8 +9,7 @@ proto-hal = { git = "https://github.com/adinack/proto-hal" }
 macros = { package = "cortex-m-spa-macros", path = "../macros" }
 
 [build-dependencies]
-phb = { package = "proto-hal-build", git = "https://github.com/adinack/proto-hal"  }
-model = { package = "cortex-m-spa-model", path = "../model" }
+phb = { package = "proto-hal-build", git = "https://github.com/adinack/proto-hal", features = ["integrated", "phm"], default-features = false }
 
 [features]
 m0 = ["macros/m0"]

@@ -1,0 +1,146 @@
+// The Nested Vectored Interrupt Controller, as model component templates:
+// `nvic_m0` for cores with 32 interrupt lines, `nvic_m4` extending it to 240.
+//
+// references:
+// - RM0440
+// - RM0490
+// - PM0214
+// - PM0223
+// - https://developer.arm.com/documentation/100166/0001/Nested-Vectored-Interrupt-Controller/NVIC-programmers-model/Table-of-NVIC-registers?lang=en
+// - https://developer.arm.com/documentation/ddi0419/c/System-Level-Architecture/System-Address-Map/Nested-Vectored-Interrupt-Controller--NVIC/NVIC-register-support-in-the-SCS?lang=en#BEHEBDBE
+
+/// Interrupt enable state, set by writing `Enable`.
+schema setena {
+    read variant Disabled ~ 0
+    read variant Enabled ~ 1
+    inert write variant Noop ~ 0
+    write variant Enable ~ 1
+}
+
+/// Interrupt enable state, cleared by writing `Disable`.
+schema clrena {
+    read variant Disabled ~ 0
+    read variant Enabled ~ 1
+    inert write variant Noop ~ 0
+    write variant Disable ~ 1
+}
+
+/// Interrupt pending state, set by writing `Pend`.
+schema setpend {
+    read variant Idle ~ 0
+    read variant Pending ~ 1
+    inert write variant Noop ~ 0
+    write variant Pend ~ 1
+}
+
+/// Interrupt pending state, cleared by writing `Unpend`.
+schema clrpend {
+    read variant Idle ~ 0
+    read variant Pending ~ 1
+    inert write variant Noop ~ 0
+    write variant Unpend ~ 1
+}
+
+/// Interrupt active state.
+schema active {
+    variant Inactive ~ 0
+    variant Active ~ 1
+}
+
+/// Interrupt priority.
+schema ip {
+    variant array P[0..=15] ~ [0, ...]
+}
+
+/// Nested Vectored Interrupt Controller, for cores with 32 interrupt lines.
+peripheral nvic_m0 @ 0xe000_e000 {
+    schema #setena
+    schema #clrena
+    schema #setpend
+    schema #clrpend
+    schema #active
+    schema #ip
+
+    // enable
+    leaky register iser1 @ 0x100 {
+        read write field array setena[0..=31] @ [0, ...] assumes setena
+    }
+
+    // disable
+    leaky register icer1 @ 0x180 {
+        read write field array clrena[0..=31] @ [0, ...] assumes clrena
+    }
+
+    // pend
+    leaky register ispr1 @ 0x200 {
+        read write field array setpend[0..=31] @ [0, ...] assumes setpend
+    }
+
+    // unpend
+    leaky register icpr1 @ 0x280 {
+        read write field array clrpend[0..=31] @ [0, ...] assumes clrpend
+    }
+
+    // active
+    register iabr1 @ 0x300 {
+        read field array active[0..=31] @ [0, ...] assumes active
+    }
+
+    // priority
+    leaky register array ipr[0..=7] @ [0x400, ...] reset 0 {
+        store field array ip[0..=3, ...] @ [4..=7, ...+8] assumes ip
+    }
+}
+
+/// Nested Vectored Interrupt Controller, for cores with 240 interrupt lines.
+peripheral #nvic_m0 as nvic_m4 {
+    // enable
+    leaky register array iser[2..=7] @ [0x104, ...] {
+        read write field array setena[32..=63, ...] @ [0, ...] assumes setena
+    }
+
+    leaky register iser8 @ 0x11c {
+        read write field array setena[224..=239] @ [0, ...] assumes setena
+    }
+
+    // disable
+    leaky register array icer[2..=7] @ [0x184, ...] {
+        read write field array clrena[32..=63, ...] @ [0, ...] assumes clrena
+    }
+
+    leaky register icer8 @ 0x19c {
+        read write field array clrena[224..=239] @ [0, ...] assumes clrena
+    }
+
+    // pend
+    leaky register array ispr[2..=7] @ [0x204, ...] {
+        read write field array setpend[32..=63, ...] @ [0, ...] assumes setpend
+    }
+
+    leaky register ispr8 @ 0x21c {
+        read write field array setpend[224..=239] @ [0, ...] assumes setpend
+    }
+
+    // unpend
+    leaky register array icpr[2..=7] @ [0x284, ...] {
+        read write field array clrpend[32..=63, ...] @ [0, ...] assumes clrpend
+    }
+
+    leaky register icpr8 @ 0x29c {
+        read write field array clrpend[224..=239] @ [0, ...] assumes clrpend
+    }
+
+    // active
+    register array iabr[2..=7] @ [0x304, ...] {
+        read field array active[32..=63, ...] @ [0, ...] assumes active
+    }
+
+    register iabr8 @ 0x31c {
+        read field array active[224..=239] @ [0, ...] assumes active
+    }
+
+    // priority
+    leaky register array ipr[8..=59] @ [0x420, ...] reset 0 {
+        store field array ip[32..=35, ...] @ [4..=7, ...+8] assumes ip
+    }
+}
