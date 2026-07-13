@@ -1,0 +1,3 @@
+# the root of a phm model: `devices/` holds the entry files — exactly one
+# device each, imports resolving within `components/` — and `components/`
+# holds the importable descriptions

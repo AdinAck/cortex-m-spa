@@ -1,4 +1,4 @@
-import cortex_m.nvic
+import peripherals.nvic
 
 /// ARM Cortex-M4 core peripherals.
 device m4 {

@@ -2,11 +2,9 @@
 
 set -euxo pipefail
 
-cd model
-cargo run
-cargo clippy -- --deny warnings
+cargo run --quiet --manifest-path ../proto-hal/build/Cargo.toml --features phm --bin phm -- check model
 
-cd ../out
+cd out
 
 VARIANTS=("m0" "m4")
 # TESTS=()

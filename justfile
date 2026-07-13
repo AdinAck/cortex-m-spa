@@ -2,9 +2,6 @@
 update:
     #!/bin/bash
 
-    cd model
-    cargo clean
-    cargo update proto-hal-build
-    cd ../out
+    cd out
     cargo clean
     cargo update proto-hal proto-hal-build
